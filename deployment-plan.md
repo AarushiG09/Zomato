@@ -70,10 +70,10 @@ fetch(`${BACKEND_URL}/api/v1/cities`)
 fetch(`${BACKEND_URL}/api/v1/recommendations`, { ... })
 ```
 
-### 2.2 Step-by-Step Vercel Setup
-Since the React SPA is a single static HTML file (`index.html`) inside the `StitchUIDesign` folder, we can configure Vercel to serve it:
+### 2.2 Step-by-Step Vercel Setup (With Env Variables Support)
+Since the React SPA is a single static HTML file (`index.html`) inside the `StitchUIDesign` folder, we can configure Vercel to serve it and dynamically inject your Railway backend domain name using environment variables:
 
-1. Create a `vercel.json` file in the project root to route requests to the static page, or deploy the `StitchUIDesign` directory directly:
+1. In the root of the project, ensure `vercel.json` exists to route requests to the static page:
    ```json
    {
      "cleanUrls": true,
@@ -84,10 +84,15 @@ Since the React SPA is a single static HTML file (`index.html`) inside the `Stit
    ```
 2. Log in to [Vercel](https://vercel.com/).
 3. Click **Add New** -> **Project** and select your GitHub repository.
-4. Set the **Root Directory** as `./` (or `StitchUIDesign` if you only want to deploy the static files).
-5. Leave the **Build and Development Settings** as default (Vercel will detect it as a static site and serve `index.html` directly).
-6. Click **Deploy**.
-7. Vercel will host your app and generate a public URL (e.g. `https://zomato-recommender.vercel.app`).
+4. Set the **Root Directory** as `./` (project root).
+5. Open the **Environment Variables** section and configure your Railway backend URL:
+   - **Key**: `BACKEND_URL`
+   - **Value**: `https://zomato-recommender-backend.up.railway.app` *(Your actual Railway service URL)*
+6. In **Build and Development Settings**, customize the **Build Command** to execute the compiler injector script:
+   - Toggle **Build Command** to override
+   - Set value to: `node scripts/build-frontend.js`
+7. Click **Deploy**.
+8. Vercel will run the injector script to replace the default production URL in `StitchUIDesign/index.html` with your custom `BACKEND_URL` value, host your app, and generate a public domain (e.g. `https://zomato-recommender.vercel.app`).
 
 ---
 
