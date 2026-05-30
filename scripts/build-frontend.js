@@ -1,8 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const indexHtmlPath = path.join(__dirname, '../StitchUIDesign/index.html');
-let content = fs.readFileSync(indexHtmlPath, 'utf8');
+const srcPath = path.join(__dirname, '../StitchUIDesign/index.html');
+const destDir = path.join(__dirname, '../public');
+const destPath = path.join(destDir, 'index.html');
+
+// Create public directory if not exists
+if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir, { recursive: true });
+}
+
+let content = fs.readFileSync(srcPath, 'utf8');
 
 // Read the Vercel environment variable
 const backendUrl = process.env.BACKEND_URL || '';
@@ -13,8 +21,11 @@ if (backendUrl) {
         /https:\/\/zomato-recommender-backend\.up\.railway\.app/g,
         backendUrl
     );
-    fs.writeFileSync(indexHtmlPath, content, 'utf8');
-    console.log(`Successfully injected BACKEND_URL: "${backendUrl}" into index.html`);
+    console.log(`Injected BACKEND_URL: "${backendUrl}"`);
 } else {
     console.log("No BACKEND_URL environment variable found. Using default fallback.");
 }
+
+// Write to public/index.html
+fs.writeFileSync(destPath, content, 'utf8');
+console.log(`Successfully generated public/index.html`);

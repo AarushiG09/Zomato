@@ -78,7 +78,7 @@ Since the React SPA is a single static HTML file (`index.html`) inside the `Stit
    {
      "cleanUrls": true,
      "rewrites": [
-       { "source": "/(.*)", "destination": "/StitchUIDesign/index.html" }
+       { "source": "/(.*)", "destination": "/index.html" }
      ]
    }
    ```
@@ -87,12 +87,12 @@ Since the React SPA is a single static HTML file (`index.html`) inside the `Stit
 4. Set the **Root Directory** as `./` (project root).
 5. Open the **Environment Variables** section and configure your Railway backend URL:
    - **Key**: `BACKEND_URL`
-   - **Value**: `https://zomato-recommender-backend.up.railway.app` *(Your actual Railway service URL)*
-6. In **Build and Development Settings**, customize the **Build Command** to execute the compiler injector script:
-   - Toggle **Build Command** to override
-   - Set value to: `node scripts/build-frontend.js`
+   - **Value**: `https://zomato-production-79e2.up.railway.app` *(Your actual Railway service URL)*
+6. In **Build and Development Settings**, customize the build options:
+   - **Build Command**: Toggle override and set to: `node scripts/build-frontend.js`
+   - **Output Directory**: Toggle override and set to: `public`
 7. Click **Deploy**.
-8. Vercel will run the injector script to replace the default production URL in `StitchUIDesign/index.html` with your custom `BACKEND_URL` value, host your app, and generate a public domain (e.g. `https://zomato-recommender.vercel.app`).
+8. Vercel will execute the build script to compile `StitchUIDesign/index.html` with your dynamic `BACKEND_URL` value and output the build to the `public/` directory, exposing it as the site root.
 
 ---
 
