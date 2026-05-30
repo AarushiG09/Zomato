@@ -26,9 +26,9 @@ We need to ensure Railway knows how to run the FastAPI app. We will use a standa
 1. **Start Command**:
    In Railway, configure the service **Start Command** to:
    ```bash
-   sh -c 'uvicorn StitchUIDesign.server:app --host 0.0.0.0 --port $PORT'
+   sh scripts/start.sh
    ```
-   *Note: To ensure fast container startup and prevent Railway health check timeouts, the database ingestion script `python scripts/ingest_dataset.py` is configured to run during the **Build Command** phase in `railway.json` and the Dockerfile. The database file `data/restaurants.db` is built and pre-packaged directly into the container image before deployment.*
+   *Note: To ensure fast container startup and prevent Railway health check timeouts, the database ingestion script `python scripts/ingest_dataset.py` is configured to run during the **Build Command** phase in `railway.json` and the Dockerfile. The database file `data/restaurants.db` is built and pre-packaged directly into the container image before deployment. The startup script `scripts/start.sh` automatically runs checks and falls back to ingestion if the database file is missing.*
 
 2. **Python Version**:
    Railway detects Python automatically. If you want to specify a version, add a `runtime.txt` at the root of the project with:

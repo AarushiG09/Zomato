@@ -26,5 +26,6 @@ RUN python scripts/ingest_dataset.py
 # Expose port
 EXPOSE 8000
 
-# Start FastAPI backend instantly to pass Railway health checks
-CMD ["sh", "-c", "uvicorn StitchUIDesign.server:app --host 0.0.0.0 --port $PORT"]
+# Make start.sh executable and run it
+RUN chmod +x scripts/start.sh
+CMD ["sh", "scripts/start.sh"]
