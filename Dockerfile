@@ -20,8 +20,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Run dataset ingestion during the build phase so database is packaged into the image
+RUN python scripts/ingest_dataset.py
+
 # Expose port
 EXPOSE 8000
 
-# Execute database ingestion and start FastAPI backend
-CMD ["sh", "-c", "python scripts/ingest_dataset.py && uvicorn StitchUIDesign.server:app --host 0.0.0.0 --port $PORT"]
+# Start FastAPI backend instantly to pass Railway health checks
+CMD ["sh", "-c", "uvicorn StitchUIDesign.server:app --host 0.0.0.0 --port $PORT"]
