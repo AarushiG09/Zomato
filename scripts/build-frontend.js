@@ -16,9 +16,9 @@ let content = fs.readFileSync(srcPath, 'utf8');
 const backendUrl = process.env.BACKEND_URL || '';
 
 if (backendUrl) {
-    // Replace the default Railway domain with the Vercel env variable value
+    // Replace either default Railway domain with the Vercel env variable value
     content = content.replace(
-        /https:\/\/zomato-recommender-backend\.up\.railway\.app/g,
+        /https:\/\/(zomato-recommender-backend|zomato-production-79e2)\.up\.railway\.app/g,
         backendUrl
     );
     console.log(`Injected BACKEND_URL: "${backendUrl}"`);
